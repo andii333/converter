@@ -1,0 +1,6 @@
+<div class="header-box" >
+    <span>Current exchange rate<small>*</small>:</span>
+    <span *ngFor = "let currency of currencies" >
+    <span class="currency">{{currency.name}}: {{currency.value | number : '1.2-2'}}</span><span class="uah">(UAH)</span>
+    </span>
+</div>

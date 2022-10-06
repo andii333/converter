@@ -1,0 +1,30 @@
+<div class="main-box">
+    <p class="title">Currency converter</p>
+    <div class="converter-box">
+        <div class="left-currency case">
+            <select name="lSelect" id="left" #leftSelect class="select" required 
+            (change)="count1(leftSelect.value,leftInput.value,rightSelect.value)">
+                <option value="EUR">Euro &#8364; (EUR)</option>
+                <option value="USD">US Dollar &#36; (USD)</option>
+                <option value="UAH">Hryvnia &#8372; (UAH)</option>
+            </select>
+            <input type="number" class="input" #leftInput value="{{input}}"
+                (keyup)="count1(leftSelect.value,leftInput.value,rightSelect.value)">
+        </div>
+        <div class="equal1">
+            <span>&#8644;</span>
+        </div>
+        <div class="equal2">&#8595;&#8593;</div>
+        <div class="right-currency case">
+            <select name="rSelect" id="right" #rightSelect class="select" required 
+            (change)="count1(leftSelect.value,leftInput.value,rightSelect.value)">
+                <option value="EUR">Euro &#8364; (EUR)</option>
+                <option value="USD">US Dollar &#36; (USD)</option>
+                <option value="UAH" selected>Hryvnia &#8372; (UAH)</option>
+            </select>
+            <input type="number" class="input" #rightInput value="{{result}}"
+            (keyup)="count2(leftSelect.value,rightSelect.value,rightInput.value)">
+        </div>
+    </div>
+
+</div>

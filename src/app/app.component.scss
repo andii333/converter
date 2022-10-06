@@ -1,0 +1,151 @@
+// --------------------------------app.component----------------------------
+.container {
+    background-color: rgb(238, 238, 238);
+    width: 98vw;
+    height: 98vh;
+    padding: 1vh 1vw;
+
+    .note {
+        font-size: 1.2rem;
+    }
+}
+
+// -----------------------------------header-------------------------------
+
+.header-box {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    padding-bottom: 0.5vw;
+    border-bottom: 1px solid rgb(156, 156, 156);
+
+    .currency {
+        margin-left: 2vw;
+        color: rgb(41, 137, 0);
+        text-decoration: underline;
+    }
+
+        .uah{
+            font-size: 1.3rem;
+        }
+}
+
+// ---------------------------------------main----------------------------------
+
+.main-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 8vh auto;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    padding: 2vw;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+    font-size: 1.3rem;
+
+    .title {
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .converter-box {
+        display: flex;
+
+        .equal1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .equal2 {
+            display: none;
+        }
+
+        .right-currency {
+            margin-left: 2vw;
+        }
+
+        .left-currency {
+            margin-right: 2vw;
+        }
+
+        .case {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .input {
+                border: none;
+                font-size: 1rem;
+                padding: 8px;
+                border-radius: 8px;
+                margin: 1rem 0;
+                width: 95%;
+            }
+
+            .select {
+                width: fit-content;
+                font-size: 0.9rem;
+                border-radius: 5px;
+                padding: 4px;
+                outline: none;
+            }
+        }
+    }
+}
+
+// ---------------------------------- media style ------------------------------
+
+@media screen and (max-width: 767px) {
+    .container {
+        .note{
+            margin: 2vw;
+            font-size: 18px;
+        }
+    }
+    .header-box{
+font-size: 18px;
+flex-direction: column;
+align-items: center;
+    }
+    .main-box {
+    margin: 4vh auto;
+        .converter-box {
+            flex-direction: column;
+            padding: 2vw;
+
+            .equal1 {
+                display: none;
+            }
+
+            .equal2 {
+                display: block;
+                margin-bottom: 2vh; 
+                text-align:center
+            }
+
+            .case {
+                .input {
+                    border: none;
+                    font-size: 1rem;
+                    padding: 8px;
+                    border-radius: 8px;
+                    margin: 1rem 0;
+                    width: 90%;
+                }
+
+                .select {
+                    width: fit-content;
+                    font-size: 0.8rem;
+                    border-radius: 5px;
+                    padding: 4px;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+}

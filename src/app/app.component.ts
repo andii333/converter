@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'converter';
+  constructor(private serviceApi: ApiService) { }
+  ngOnInit(){
+    // this.serviceApi.fetchExchange()
+
+  }
 }
