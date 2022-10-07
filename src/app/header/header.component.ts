@@ -1,5 +1,6 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { Component, OnInit } from '@angular/core';
+import { ExchangeClass } from '../classes/exchange-class';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-header',
@@ -7,17 +8,18 @@ import { ApiService } from '../api.service';
   styleUrls: ['../app.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  currencies:any;
+  currencies!: ExchangeClass[];
   constructor(private serviceApi: ApiService) { }
 
- ngOnInit() {
-   this.serviceApi.fetchExchange()
-this.asd()
+  ngOnInit() {
+    this.serviceApi.fetchExchange();
+    this.asd();
   }
-    async asd(){
-    await this.serviceApi.exchangeList
-     this.currencies = this.serviceApi.exchangeList
-    }
-   
+
+  asd() {
+    this.serviceApi.exchangeList;
+    this.currencies = this.serviceApi.exchangeList;
+  }
+
 }
 
