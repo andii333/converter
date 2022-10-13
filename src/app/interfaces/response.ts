@@ -1,7 +1,3 @@
-export interface Response{
-   rates: {
-    USD:number,
-    EUR:number,
-    UAH:number
-   }
+export interface ExchangeResponse{
+rates:{[key:string]: number | string} 
 }

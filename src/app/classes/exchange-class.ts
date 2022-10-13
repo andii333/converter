@@ -1,7 +1,8 @@
+import { ExchangeResponse } from "../interfaces/response"
 
 export class ExchangeClass {
-    constructor(
-        public name: string,
-        public value: number
-    ){}
+    rates: { [key: string]: number | string }
+    constructor(res: ExchangeResponse) {
+        this.rates = res['rates']
+    }
 }

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExchangeClass } from '../classes/exchange-class';
-import { Response } from '../interfaces/response'
+import { ExchangeResponse} from '../interfaces/response'
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  exchangeList: ExchangeClass[] = [];
-  currencyList: ExchangeClass[] = [];
+  currencyList = [];
 
   constructor(private http: HttpClient) { }
 
-  fetchExchange() {
-    return this.http.get<Response>("https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest",
+  fetchExchange(): Observable<ExchangeClass> {
+    return this.http.get<ExchangeResponse>("https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest",
       {
         headers: new HttpHeaders({
           'X-RapidAPI-Key': 'dbe9a56fdfmsh0defe087f58c141p1aeb13jsnaf524cba7477',
@@ -21,17 +21,9 @@ export class ApiService {
         }
         )
       }
-    ).subscribe(
-      (response)=> {
-          this.currencyList.push(
-            new ExchangeClass('EUR', response.rates.EUR),
-            new ExchangeClass('USD', response.rates.USD),
-            new ExchangeClass('UAH', response.rates.UAH)
-          );
-          const eur = new ExchangeClass('EUR', (response.rates.EUR) * (response.rates.UAH));
-          const usd = new ExchangeClass('USD', (response.rates.EUR) / (response.rates.USD) * (response.rates.UAH));
-          this.exchangeList.push(eur, usd);
-        }
+    ).pipe(
+      map(res => new ExchangeClass(res)
+      )
     )
   }
 }

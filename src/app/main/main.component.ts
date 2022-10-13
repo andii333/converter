@@ -1,36 +1,54 @@
-import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { currencyObject } from '../interfaces/currency-object';
 import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['../app.component.scss']
 })
-export class MainComponent {
-  leftSelect = new FormControl("EUR");
-  leftInput = new FormControl('');
-  rightSelect = new FormControl('UAH');
-  rightInput = new FormControl('');
+export class MainComponent implements OnInit {
+  listCurrency: currencyObject[] = [];
+  form!:FormGroup;
+leftInput!:number;
+  rightInput!:number;
 
-  list = this.service.currencyList;
+  constructor(
+    public service: ApiService,
+    private fb: FormBuilder) {}
 
-  constructor(public service: ApiService) { }
+  ngOnInit() {
+    this.service.fetchExchange().subscribe(exchangeList => {
+      const obj = exchangeList.rates;
+      for (const key in obj) {
+        this.listCurrency.push({ name: key, value: obj[key] as number })
+      }
+    }
+    )
 
-  count1(condition: string) {
-    const leftCurrency = this.list.findIndex((i) => { return i.name === this.leftSelect.value });
-    const rightCurrency = this.list.findIndex((i) => { return i.name === this.rightSelect.value });
+    this.form = this.fb.group({
+      leftSelect: ['',[Validators.required]],
+      leftInput: ['', [Validators.required]],
+      rightSelect: ['', [Validators.required]],
+      rightInput: ['', [Validators.required]],
+  })
+  }
+
+
+  onSubmit(letter:string) {
+    const leftSelect = this.form.value.leftSelect;
+    const rightSelect = this.form.value.rightSelect;
     
-    if (condition === 'left' && this.leftInput.value !== null) {
-      const result = (+this.leftInput.value * (+this.list[rightCurrency].value) / (+this.list[leftCurrency].value))
-      .toFixed(2);
-      this.rightInput.setValue(result);
-    } ;
-    if (this.leftInput.value === null) { this.rightInput.setValue(null) };
-    if (condition === 'right' && this.rightInput.value !== null) {
-      const input = (+this.rightInput.value * (+this.list[leftCurrency].value) / (+this.list[rightCurrency].value))
-      .toFixed(2);
-      this.leftInput.setValue(input);
-    };
-    if (this.rightInput.value === null) { this.leftInput.setValue(null) };
+    if (letter === 'a'){
+      this.leftInput = this.form.value.leftInput;
+      this.rightInput = +(rightSelect * this.leftInput / leftSelect ).toFixed(2);
+    } 
+    if (letter === 'b') {
+      this.rightInput = +(rightSelect * this.leftInput / leftSelect).toFixed(2);
+    } 
+    if (letter === 'c') {
+      this.rightInput = this.form.value.rightInput;
+      this.leftInput = +(leftSelect * this.rightInput / rightSelect ).toFixed(2);
+    }
   }
 }

@@ -1,26 +1,23 @@
 <div class="main-box">
+    <form [formGroup]="form">
     <p class="title">Currency converter</p>
     <div class="converter-box">
         <div class="left-currency case">
-            <select name="lSelect" id="left" [formControl]="leftSelect" class="select" required (change)="count1('left')" >
-                <option value="EUR">Euro &#8364; (EUR)</option>
-                <option value="USD">US Dollar &#36; (USD)</option>
-                <option value="UAH">Hryvnia &#8372; (UAH)</option>
+            <select formControlName="leftSelect" class="select" (change)="onSubmit('b')" >
+                <option *ngFor="let currency of listCurrency" value="{{currency.value}}">{{currency.name}}</option>
             </select>
-            <input type="number" class="input" [formControl]="leftInput" value="{{leftInput}}" (keyup)="count1('left')">
+            <input type="number" class="input" formControlName="leftInput" value="{{leftInput}}" (keyup)="onSubmit('a')">
         </div>
         <div class="equal1">
             <span>&#8644;</span>
         </div>
         <div class="equal2">&#8595;&#8593;</div>
         <div class="right-currency case">
-            <select name="rSelect" id="right" [formControl]="rightSelect" class="select" required (change)="count1('left')">
-                <option value="EUR">Euro &#8364; (EUR)</option>
-                <option value="USD">US Dollar &#36; (USD)</option>
-                <option value="UAH">Hryvnia &#8372; (UAH)</option>
+            <select formControlName="rightSelect" class="select" (change)="onSubmit('b')">
+                <option *ngFor="let currency of listCurrency" value="{{currency.value}}">{{currency.name}}</option>
             </select>
-            <input type="number" class="input" [formControl]="rightInput" value="{{rightInput}}" (keyup)="count1('right')">
+            <input type="number" class="input" formControlName="rightInput" value="{{rightInput}}" (keyup)="onSubmit('c')">
         </div>
     </div>
-
+</form>
 </div>

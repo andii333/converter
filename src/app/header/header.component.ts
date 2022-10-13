@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExchangeClass } from '../classes/exchange-class';
+import { currencyObject } from '../interfaces/currency-object';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -8,18 +8,23 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['../app.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  currencies!: ExchangeClass[];
+  currencies: currencyObject[] = [];
+  relevantCurrens!: number;
   constructor(private serviceApi: ApiService) { }
 
   ngOnInit() {
-    this.serviceApi.fetchExchange();
-    this.asd();
+    this.serviceApi.fetchExchange().subscribe(obj => {
+      const currens = obj.rates;
+      for (const key in currens) {
+        if (key.includes("UAH")) { this.relevantCurrens = currens[key] as number
+         }}
+      for (const key in currens) {
+        if (key.includes("EUR") || key.includes("USD")) {
+          this.currencies.push({ name: key, value:(this.relevantCurrens / (currens[key] as number))})
+        }
+      }
+    }
+    )
   }
-
-  asd() {
-    this.serviceApi.exchangeList;
-    this.currencies = this.serviceApi.exchangeList;
-  }
-
 }
 
